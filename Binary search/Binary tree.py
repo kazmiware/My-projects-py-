@@ -111,10 +111,6 @@ class BT:
                lst.append(i)
         print(lst)
 
-
-
-
-
 Binary_tree=BT(27)
 Binary_tree.lst=[12,34,28,11,10,65,56]
 Binary_tree.part()

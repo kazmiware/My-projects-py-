@@ -1,126 +1,73 @@
-import random
-class BT:
-    lst=[]
-    tree={}
-    def __init__(self,root,low=[],high=[]):
-        self.low=low
-        self.high=high
-        self.root=root
+class Binary_tree:
+    def __init__(self,root,node=None):
+        self.root=Node(root)
+        self.node=node
 
-    def part(self):
-        for i in self.lst:
-            if i <self.root:
-                self.low.append(i)
-            elif i>self.root:
-                self.high.append(i)
+    def add_node(self,item):
+        itr = self.root
+        while True:
+            if item<itr.val:
+                if itr.left==None:
+                    itr.left=Node(item)
+                itr=itr.left
+            elif item>itr.val:
+                if itr.right==None:
+                    itr.right=Node(item)
+                itr=itr.right
+            else:
+              break
 
-    def create_left(self,num):
-        if self.low==[]:
-            return
-        if num==self.root:
-            i=random.choice(self.low)
-            self.low.remove(i)
-            self.tree[num]=[i]
-            for i in self.tree[num]:
-                if i<self.root:
-                    self.create_left(i)
-        elif num!=self.root and len(self.low)!=0:
-            count_low=0
-            count_high=0
-            self.tree[num]=[]
-            while self.low!=[] and len(self.tree[num])<=2:
-                i = random.choice(self.low)
-                self.low.remove(i)
-                if i<num and count_low<=1:
-                    self.tree[num].insert(0,i)
-                    count_low+=1
-                elif i>num and count_high<=1:
-                    self.tree[num].append(i)
-                    count_high+=1
+    def preorder(self):
+        print("Preorder Traversal:")
+        print(str(self.root.val)+" --> Root Node")
+        itr=self.root
+        while itr.left!=None:
+            print(itr.left.val)
+            itr=itr.left
 
-                for i in self.tree[num]:
-                    self.create_left(i)
-            return
+        itr = self.root
+        while itr.right != None:
+            print(itr.right.val)
+            itr = itr.right
 
-    def create_right(self,num):
-        if self.high==[]:
-            return
-        if num==self.root:
-            i=random.choice(self.high)
-            self.high.remove(i)
-            self.tree[num].append(i)
-            for i in self.tree[num]:
-                if i >self.root:
-                   self.create_right(i)
-        elif num!=self.root and len(self.high)!=0:
-            count_low=0
-            count_high=0
-            self.tree[num]=[]
-            while self.high!=[] and len(self.tree[num])<=2:
-                i = random.choice(self.high)
-                self.high.remove(i)
-                if i<num and count_low<=1:
-                    self.tree[num].insert(0,i)
-                    count_low+=1
-                elif i>num and count_high<=1:
-                    self.tree[num].append(i)
-                    count_high+=1
+    def inorder(self):
+        print("Inorder Traversal:")
+        itr = self.root
+        while itr.left != None:
+            print(itr.left.val)
+            itr = itr.left
 
-                for i in self.tree[num]:
-                    self.create_right(i)
-            return
+        print(str(self.root.val) + " --> Root Node")
 
-    def print_tree(self):
-        for i in self.tree.keys():
-            print(str(i)+":")
-            for j in self.tree[i]:
-                print ("  "+str(j))
+        itr = self.root
+        while itr.right != None:
+            print(itr.right.val)
+            itr = itr.right
 
-    def insert(self,val):
-        self.tree={}
-        self.part()
-        if val<self.root:
-            self.low.append(val)
-        else:
-            self.high.append(val)
-        self.create_left(self.root)
-        self.create_right(self.root)
+    def postorder(self):
+        print("Postorder Traversal:")
+        itr = self.root
+        while itr.left != None:
+            print(itr.left.val)
+            itr = itr.left
 
-    def pre_order(self):
-        lst=[]
-        for i in self.tree.keys():
-            lst.append(i)
-        print(lst)
+        itr = self.root
+        while itr.right != None:
+            print(itr.right.val)
+            itr = itr.right
+        print(str(self.root.val) + " --> Root Node")
 
-    def post_order(self):
-        lst=[]
-        for i in self.tree.keys():
-              if i!=self.root:
-                 lst.append(i)
-        lst.append(self.root)
-        print(lst)
+class Node:
+    def __init__(self,val,left=None,right=None):
+        self.val=val
+        self.left=left
+        self.right=right
 
-    def in_order(self):
-        lst=[]
-        count=0
-        for i in self.tree.keys():
-            if i>self.root and count<1:
-                lst.append(self.root)
-                count+=1
-            if i !=self.root:
-               lst.append(i)
-        print(lst)
-
-
-
-
-
-Binary_tree=BT(27)
-Binary_tree.lst=[12,34,28,11,10,65,56]
-Binary_tree.part()
-Binary_tree.create_left(Binary_tree.root)
-Binary_tree.create_right(Binary_tree.root)
-Binary_tree.insert(13)
-print(Binary_tree.tree)
-# Binary_tree.in_order()
-
+bt=Binary_tree(4)
+bt.add_node(2)
+bt.add_node(6)
+bt.add_node(1)
+bt.add_node(7)
+bt.preorder()
+bt.inorder()
+bt.postorder()
